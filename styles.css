@@ -36,6 +36,13 @@ body {
   margin: 3rem 0 2rem;
 }
 
+main section {
+  display: flex;
+  flex: 1;
+  gap: 1.25rem;
+  padding-bottom: 2rem;
+}
+
 form {
   background-color: #f9fbfa;
   border-radius: 1rem;
@@ -255,5 +262,5 @@ aside ul {
 }
 
 .remove-icon:hover {
-  opacity: 0.7;
+  opacity: 0.6;
 }
