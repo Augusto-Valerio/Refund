@@ -55,3 +55,77 @@ fieldset legend {
   color: #4d5c57;
   margin-bottom: 0.5rem;
 }
+
+fieldset:focus-within legend {
+  color: #1f8459;
+  font-weight: 700;
+}
+
+input,
+select {
+  flex: 1;
+  height: 3rem;
+  border-radius: 0.5rem;
+  border: 1px solid #cdd5d2;
+  padding: 0 1rem;
+  font-size: 0.87rem;
+  color: #1f2523;
+  background-color: transparent;
+  outline: none;
+}
+
+select {
+  appearance: none;
+  background-image: url(img/chevron-down.svg);
+  background-repeat: no-repeat;
+  background-position: right 0.7rem top 50%;
+  background-size: 1.25rem auto;
+}
+
+input::placeholder, 
+select:invalid {
+  color: #4d5c57;
+}
+
+input:focus,
+select:focus {
+  border: 1.5px solid #1f8459;
+}
+
+.inputs-row {
+  display: flex;
+  flex: 1;
+
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.inputs-row fieldset:first-child {
+  flex: 1;
+}
+
+.inputs-row fieldset:last-child input {
+  max-width: 9.625rem;
+}
+
+form button {
+  height: 3rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-size: 0.87rem;
+  color: #ffffff;
+  background-color: #1f8459;
+  font-weight: 700;
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #2cb178;
+}
+
+form button:last-child {
+  margin-top: 2rem;
+}
