@@ -102,7 +102,14 @@ function updateTotals() {
       total += Number(value)
     }
 
-    expensesTotal.textContent = total
+    const symbolBRL = document.createElement("small")
+    symbolBRL.textContent = "R$"
+
+    total = formatCurrencyBRL(total).toUpperCase().replace("R$", "")
+
+    expensesTotal.innerHTML = ""
+
+    expensesTotal.append(symbolBRL, total)
 
   } catch (error) {
     console.log(error)
