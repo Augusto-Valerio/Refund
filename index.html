@@ -15,7 +15,44 @@
 </head>
 
 <body>
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore fuga vitae, quaerat rem qui deserunt odit eaque deleniti beatae, quisquam, nihil fugit minima quasi dolor dolore porro incidunt. Unde, itaque!
+  <main>
+    <img src="./img/logo.svg" alt="Convert logo" class="logo">
+
+    <section>
+      <form>
+        <h1>Solicitação de reembolso</h1>
+        <p>Informe os dados da despesa para solicitar reembolso.
+          A despesa será analisada e reembolsada em até 30 dias.
+        </p>
+
+        <fieldset>
+          <legend>Nome da despesa</legend>
+          <input type="text" name="expense" id="expense" required>
+        </fieldset>
+
+        <div class="inputs-row">
+          <fieldset>
+            <legend>Categoria</legend>
+            <select name="category" id="category">
+              <option value="" disabled selected hidden>Selecione</option>
+              <option value="food">Alimentação</option>
+              <option value="accommodation">Hospedagem</option>
+              <option value="services">Serviços</option>
+              <option value="transport">Transporte</option>
+              <option value="others">Outros</option>
+            </select>
+          </fieldset>
+
+          <fieldset>
+            <legend>Valor da despesa</legend>
+            <input type="text" name="amount" id="amount" placeholder="R$0,00">
+          </fieldset>
+        </div>
+
+        <button type="submit">Adicionar despesas</button>
+      </form>
+    </section>
+  </main>
 </body>
 
 </html>
