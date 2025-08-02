@@ -1,11 +1,11 @@
-const form = document.querySelector("form")
-const amount = document.getElementById("amount")
-const expense = document.getElementById("expense")
-const category = document.getElementById("category")
+const form = document.querySelector("form");
+const amount = document.getElementById("amount");
+const expense = document.getElementById("expense");
+const category = document.getElementById("category");
 
-const expenseList = document.querySelector("ul")
-const expensesTotal = document.querySelector("aside header h2")
-const expensesQuantity = document.querySelector("aside header p span")
+const expenseList = document.querySelector("ul");
+const expensesTotal = document.querySelector("aside header h2");
+const expensesQuantity = document.querySelector("aside header p span");
 
 amount.oninput = () => {
   let value = amount.value.replace(/\D/g, "");
@@ -13,7 +13,7 @@ amount.oninput = () => {
   value = Number(value) / 100;
 
   amount.value = formatCurrencyBRL(value);
-}
+};
 
 function formatCurrencyBRL(value) {
   // Formata o valor no padrão BRL (Real Brasileiro).
@@ -26,7 +26,7 @@ function formatCurrencyBRL(value) {
 }
 
 form.onsubmit = (event) => {
-  event.preventDefault()
+  event.preventDefault();
 
   const newExpense = {
     id: new Date().getTime(),
@@ -38,43 +38,47 @@ form.onsubmit = (event) => {
   };
 
   expenseAdd(newExpense);
-}
+};
 
 function expenseAdd(newExpense) {
   try {
-    const expenseItem = document.createElement("li")
-    expenseItem.classList.add("expense")
+    const expenseItem = document.createElement("li");
+    expenseItem.classList.add("expense");
 
-    const expenseIcon = document.createElement("img")
-    expenseIcon.setAttribute("src", `img/${newExpense.category_id}.svg`)
-    expenseIcon.setAttribute("alt", newExpense.category_name)
+    const expenseIcon = document.createElement("img");
+    expenseIcon.setAttribute("src", `img/${newExpense.category_id}.svg`);
+    expenseIcon.setAttribute("alt", newExpense.category_name);
 
-    const expenseInfo = document.createElement("div")
-    expenseInfo.classList.add("expense-info")
+    const expenseInfo = document.createElement("div");
+    expenseInfo.classList.add("expense-info");
 
-    const expenseName = document.createElement("strong")
-    expenseName.textContent = newExpense.expense
+    const expenseName = document.createElement("strong");
+    expenseName.textContent = newExpense.expense;
 
-    const expenseCategory = document.createElement("span")
-    expenseCategory.textContent = newExpense.category_name
+    const expenseCategory = document.createElement("span");
+    expenseCategory.textContent = newExpense.category_name;
 
-    expenseInfo.append(expenseName, expenseCategory)
+    expenseInfo.append(expenseName, expenseCategory);
 
-    const expenseAmount = document.createElement("span")
-    expenseAmount.classList.add("expense-amount")
-    expenseAmount.innerHTML = `<small>R$</small>${newExpense.amount.toUpperCase().replace("R$", "")}`
+    const expenseAmount = document.createElement("span");
+    expenseAmount.classList.add("expense-amount");
+    expenseAmount.innerHTML = `<small>R$</small>${newExpense.amount
+      .toUpperCase()
+      .replace("R$", "")}`;
 
-    const removeIcon = document.createElement("img")
-    removeIcon.classList.add("remove-icon")
-    removeIcon.setAttribute("src", "img/remove.svg")
-    removeIcon.setAttribute("alt", "remover")
+    const removeIcon = document.createElement("img");
+    removeIcon.classList.add("remove-icon");
+    removeIcon.setAttribute("src", "img/remove.svg");
+    removeIcon.setAttribute("alt", "remover");
 
-    expenseItem.append(expenseIcon, expenseInfo, expenseAmount, removeIcon)
-    expenseList.append(expenseItem)
+    expenseItem.append(expenseIcon, expenseInfo, expenseAmount, removeIcon);
+    expenseList.append(expenseItem);
 
-    formClear()
+    expenseItem.classList.add("fade-in");
 
-    updateTotals()
+    formClear();
+
+    updateTotals();
   } catch (error) {
     alert("Não foi possível atualizar a lista de despesas.");
     console.log(error);
@@ -83,59 +87,72 @@ function expenseAdd(newExpense) {
 
 function updateTotals() {
   try {
-    const items = expenseList.children
+    const items = expenseList.children;
 
-    expensesQuantity.textContent = `${items.length} ${items.length > 1 ? "despesas" : "despesa"}`
+    expensesQuantity.textContent = `${items.length} ${
+      items.length > 1 ? "despesas" : "despesa"
+    }`;
 
-    let total = 0
+    let total = 0;
 
     // Percorre cada item (li) da lista (ul)
-    for(let item = 0; item < items.length; item++) {
-      const itemAmount = items[item].querySelector(".expense-amount")
-      
-      let value = itemAmount.textContent.replace(/[^\d,]/g, "").replace(",",".")
+    for (let item = 0; item < items.length; item++) {
+      const itemAmount = items[item].querySelector(".expense-amount");
 
-      value = parseFloat(value)
+      let value = itemAmount.textContent
+        .replace(/[^\d,]/g, "")
+        .replace(",", ".");
 
-      if(isNaN(value)) {
-        return alert("Não foi possível calcular o total. O valor não parece ser um número.")
+      value = parseFloat(value);
+
+      if (isNaN(value)) {
+        return alert(
+          "Não foi possível calcular o total. O valor não parece ser um número."
+        );
       }
 
-      total += Number(value)
+      total += Number(value);
     }
 
-    const symbolBRL = document.createElement("small")
-    symbolBRL.textContent = "R$"
+    const symbolBRL = document.createElement("small");
+    symbolBRL.textContent = "R$";
 
-    total = formatCurrencyBRL(total).toUpperCase().replace("R$", "")
+    total = formatCurrencyBRL(total).toUpperCase().replace("R$", "");
 
-    expensesTotal.innerHTML = ""
+    expensesTotal.innerHTML = "";
 
-    expensesTotal.append(symbolBRL, total)
+    expensesTotal.append(symbolBRL, total);
 
+    expensesTotal.classList.add("total-animate");
+
+    expensesTotal.addEventListener("animationend", () => {
+      expensesTotal.classList.remove("total-animate");
+    });
+    
   } catch (error) {
-    console.log(error)
-    alert("Não foi possível atualizar os totais.")
+    console.log(error);
+    alert("Não foi possível atualizar os totais.");
   }
 }
 
 expenseList.addEventListener("click", (event) => {
   if (event.target.classList.contains("remove-icon")) {
-    const item = event.target.closest(".expense")
-  
-    item.remove()
-  }
+    const item = event.target.closest(".expense");
+    item.classList.add("removing");
 
-  // Updates the totals.
-  updateTotals()
-}) 
+    item.addEventListener("animationend", () => {
+      item.remove();
+      updateTotals();
+    });
+  }
+});
 
 function formClear() {
   // Limpa os inputs.
-  expense.value = ""
-  category.value = ""
-  amount.value = ""
+  expense.value = "";
+  category.value = "";
+  amount.value = "";
 
   // Coloca o foco no input amount
-  expense.focus()
+  expense.focus();
 }
